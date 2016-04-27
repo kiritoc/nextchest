@@ -1,0 +1,6 @@
+# IntelliJ
+.idea
+NextChest.iml
+
+# Nodes modules
+node_modules
