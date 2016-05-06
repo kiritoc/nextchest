@@ -1,5 +1,5 @@
-@body-background-color: rgb(243, 123, 29);
 @main-color: white;
+@secondary-color: rgb(243, 123, 29);
 
 @font-face {
   font-family: CartoonBlocks;
@@ -10,7 +10,7 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
-  background-color: @body-background-color !important;
+  background-color: @secondary-color !important;
 }
 
 h1.main-title {
@@ -53,19 +53,24 @@ h1.main-title {
   }
 
   .regions {
-    margin-top: 20px;
+    margin-top: 1em;
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 0.75em;
+    border-radius: 1em;
 
     .region {
       :checked + span {
-        font-weight: bold;
+        color: @secondary-color;
       }
-
-      padding: 0 10px;
-      background: grey;
 
       input {
         display: none;
       }
+      padding: 0.5em 1em;
+      //padding: 0 0.75em;
+      margin: 0;
+      vertical-align: middle;
+      cursor: pointer
     }
   }
 }
