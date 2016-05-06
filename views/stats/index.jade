@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    .stats
+        form.summoner.navbar-form.navbar-left(action='' method='post')
+            .search
+                input.form-control(type='text' name='summonerName' placeholder=__('form summoner name') required)
+                button(type="submit")
+                    span.fa.fa-search
+
+            .regions.btn-group(role='group')
+                each region in regions
+                    label.radio-inline.region
+                        input(type='radio' name='region' value=region checked)=region
+                        span=region

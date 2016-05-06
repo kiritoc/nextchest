@@ -1,7 +1,23 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+    body
+        header
+            .container
+                h1.main-title
+                    a(href="/", title= __('main title'), alt= __('main title'))=__('main title')
+        .container
+            block content
+
+
+        //script(type="text/javascript").
+            $(function () {
+                $('.js-set-lang').click(function () {
+                    document.cookie = "lang =" + $(this).attr('name');
+                    location.reload();
+                });
+            });
