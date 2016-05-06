@@ -1,6 +1,10 @@
 'use strict';
 
-var LolClient = require('../lol');
+var LolClient = require('../lol'),
+    cache = require('../../core/cache');
+
+const keyCacheSuffix = "championMastery";
+
 require('./summoner');
 
 LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
@@ -13,10 +17,13 @@ LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
     } else if (params.playerId === undefined) {
         throw LOG_PREFIX + 'Player ID is missing';
     } else {
-        this.httpsGetRequest({
-            hostPrefix: params.region,
-            path: '/championmastery/location/' + platformId + '/player/' + params.playerId + '/champions'
-        }, callback);
+        var keyCache = keyCacheSuffix + JSON.stringify(params);
+        cache.wrap(keyCache, function (cb) {
+            this.httpsGetRequest({
+                hostPrefix: params.region,
+                path: '/championmastery/location/' + platformId + '/player/' + params.playerId + '/champions'
+            }, cb);
+        }.bind(this), callback);
     }
 };
 
