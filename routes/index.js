@@ -6,6 +6,7 @@ module.exports = function () {
       stats = require('./stats'),
       contact = require('./contact');
 
+  router.use('/', stats());
   router.use('/stats', stats());
   router.use('/contact', contact());
 
