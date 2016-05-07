@@ -13,7 +13,19 @@ module.exports = function () {
     });
 
     router.get('/summoner/:region/:summonerName', function (req, res) {
-        res.render('stats/champions');
+        // Ensure summoner exists
+        lolClient.getSummonerIDFromName({
+            region: req.params.region.toLowerCase(),
+            summonerName: req.params.summonerName.toLowerCase()
+        }, function (error, champions) {
+            if (error === null) {
+                res.render('stats/champions');
+            } else {
+                res.render('error', {
+                    error: error
+                });
+            }
+        });
     });
 
     router.get('/', function (req, res) {
