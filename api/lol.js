@@ -8,9 +8,14 @@ function LolClient() {
         baseImagesUrl: 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/',
         hostSuffix: '.api.pvp.net',
         port: 443,
-        key: 'a4fa26df-f21c-4943-99e6-5176149748c3',
+        key: process.env.LOL_API_KEY,
         rateLimitRequests: 1 // seconds
     };
+
+    if (this.config.key === undefined) {
+        console.log(process.env);
+        console.log(LOG_PREFIX + 'No API KEY configured !!');
+    }
 
     // Available regions / platforms
     this.regions = getRegions();
@@ -122,11 +127,16 @@ function httpsGetRequest(request) {
             response.on('end', function () {
                 try {
                     var data = JSON.parse(buffer);
-                    utils.callMultipleCallbacks(request.callbacks, null, data);
+                    if (data.status !== undefined) {
+                        utils.callMultipleCallbacks(request.callbacks, data.status);
+                    } else {
+                        utils.callMultipleCallbacks(request.callbacks, null, data);
+                    }
+
                 } catch (exception) {
                     console.log(LOG_PREFIX + 'Error while processing data', exception);
                     utils.callMultipleCallbacks(request.callbacks, {
-                        statusCode: 500,
+                        status_code: 500,
                         message: exception
                     });
                 }
