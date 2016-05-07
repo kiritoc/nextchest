@@ -1,0 +1,13 @@
+mixin championBadge(img, points)
+    .champion-badge
+        img(src=img)
+        #badge
+        span.points=points
+
+mixin category(title)
+    .top-selection.ribbon
+        h3
+            span=title
+        .content
+            if block
+                block

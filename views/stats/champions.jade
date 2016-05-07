@@ -6,7 +6,14 @@ block content
 
         p=__("stats sub title")
 
-        each object in data
-            ul
-                each value, key in object
-                    li=key + ' : ' + value
+        +category(__('stats category goal'))
+            each champion in topGoal
+                +championBadge(champion.image, champion.championLevel)
+
+        +category(__('stats category random'))
+            each champion in randomTop
+                +championBadge(champion.image, champion.championLevel)
+
+        +category(__('stats category less played'))
+            each champion in lessPlayed
+                +championBadge(champion.image, champion.championLevel)

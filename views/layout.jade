@@ -2,17 +2,22 @@ doctype html
 html
     head
         title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
-        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-        link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+
+        link(rel='stylesheet' href='/stylesheets/style.css')
+        link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet' href='/stylesheets/font-awesome.min.css')
+
+        script(type='text/javascript' src='/javascripts/jquery.min.js')
     body
         header
             .container
                 h1.main-title
                     a(href="/", title= __('main title'), alt= __('main title'))=__('main title')
         .container
+            include mixins
             block content
 
+        block initJavascript
 
         //script(type="text/javascript").
             $(function () {

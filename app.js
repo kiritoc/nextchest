@@ -46,6 +46,7 @@ app.use(function (req, res, next) {
     }
 
     req.setLocale(lang);
+
     if (next) {
         return next();
     }
