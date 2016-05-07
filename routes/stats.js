@@ -17,10 +17,12 @@ module.exports = function () {
         lolClient.getSummonerIDFromName({
             region: req.params.region.toLowerCase(),
             summonerName: req.params.summonerName.toLowerCase()
-        }, function (error, summoner) {
+        }, function (error, result) {
             if (error === null) {
+                var summoner = result[req.params.summonerName];
+                summoner.image = lolClient.getSummonerImageUrl(summoner.profileIconId);
                 res.render('stats/summoner-champions', {
-                    summoner: summoner[req.params.summonerName]
+                    summoner: summoner
                 });
             } else {
                 res.render('error', {
@@ -49,7 +51,7 @@ module.exports = function () {
                     if (error === null) {
                         Object.keys(champions).forEach(function (key) {
                             var championId = champions[key].championId;
-                            champions[key].image = lolClient.getImageUrl(result.data[championId].image.full);
+                            champions[key].image = lolClient.getChampionImageUrl(result.data[championId].image.full);
                         });
 
                         res.render('stats/top-categories', {
