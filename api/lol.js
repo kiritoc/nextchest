@@ -4,8 +4,11 @@ const LOG_PREFIX = 'LOL Api Client - ';
 
 function LolClient() {
     // API Request configuration
+    var ddragonVersion = '6.8.1';
+
     this.config = {
-        baseImagesUrl: 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/',
+        baseChampionImageUrl: 'http://ddragon.leagueoflegends.com/cdn/' + ddragonVersion + '/img/champion/',
+        baseSummonerImageUrl: 'http://ddragon.leagueoflegends.com/cdn/' + ddragonVersion + '/img/profileicon/',
         hostSuffix: '.api.pvp.net',
         port: 443,
         key: process.env.LOL_API_KEY,
@@ -27,9 +30,13 @@ function LolClient() {
     includeFiles('*/operations/*.js');
 }
 
-LolClient.prototype.getImageUrl = function (imageFull) {
-    return this.config.baseImagesUrl + imageFull;
+LolClient.prototype.getChampionImageUrl = function (imageFull) {
+    return this.config.baseChampionImageUrl + imageFull;
 };
+
+LolClient.prototype.getSummonerImageUrl = function (image) {
+    return this.config.baseSummonerImageUrl + image + '.png';
+}
 
 LolClient.prototype.addGetRequest = function (params, callback) {
     var request = {params: params, callbacks: [callback], asked: 1};
