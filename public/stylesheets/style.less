@@ -1,5 +1,6 @@
 @primary-color: white;
 @secondary-color: rgb(243, 123, 29);
+@third-color: #333;
 
 @import url('https://fonts.googleapis.com/css?family=Bangers');
 
@@ -23,7 +24,7 @@ h1.main-title {
 
 .stats form.summoner {
   text-align: center;
-  background: rgba(255, 255, 255, 0.5);
+  background: fade(@third-color, 25);
   width: 100%;
   padding: 20px 40px 20px 30px;
   border: 0;
@@ -127,6 +128,7 @@ h1.main-title {
   }
 
   .points {
+    font-family: 'Bangers', cursive;
     position: absolute;
     font-size: 2em;
     margin-left: auto;
@@ -138,38 +140,44 @@ h1.main-title {
   }
 }
 
-.top-selection {
-  text-align: center;
-  font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
-  width: 100%;
-  margin: 10em auto;
-  padding: 0 10px 4px;
-  position: relative;
-  color: #444;
-  background: #fff;
-  border: 1px solid #d2d2d2;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-  h3 {
-    font-family: 'Bangers', cursive;
+.top-selections {
+  .category:first-child {
+    margin: 0 auto;
   }
 
-  .content {
-    list-style: none;
+  .category {
+    margin: 10em auto;
+    text-align: center;
+    font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
+    width: 100%;
+    padding: 0 1em 0.5em;
+    position: relative;
+    color: #444;
+    background: fade(@third-color, 75);
+    border: 0.2em solid #d2d2d2;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+    -webkit-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
 
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+    h3 {
+      font-family: 'Bangers', cursive;
+    }
 
-    -webkit-flex-flow: row wrap;
-    justify-content: space-around;
+    .content {
+      list-style: none;
+
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-flow: row wrap;
+      justify-content: space-around;
+    }
   }
 }
 
@@ -184,14 +192,13 @@ h1.main-title {
   text-shadow: 0 1px 1px #111;
   border-top: 1px solid #363636;
   border-bottom: 1px solid #202020;
-  background: #333;
+  background: @third-color;
   background: linear-gradient(top, #383838 0%, #262626 100%);
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.ribbon h3::before,
-.ribbon h3::after {
+.ribbon h3::before {
   content: '';
   display: block;
   width: 0;
