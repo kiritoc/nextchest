@@ -46,7 +46,7 @@ LolClient.prototype.getChampionMasteryFromName = function (params, callback) {
                 }, callback);
             } else {
                 callback({
-                    statusCode: 500,
+                    status_code: 500,
                     message: ''
                 });
             }

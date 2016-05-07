@@ -10,7 +10,7 @@ LolClient.prototype.getSummonerIDFromName = function (params, callback) {
 
     if (params.region === undefined || params.summonerName === undefined) {
         callback({
-            statusCode: 500,
+            status_code: 500,
             message: 'Wrong params'
         });
     } else {
