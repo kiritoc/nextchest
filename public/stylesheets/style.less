@@ -1,10 +1,7 @@
-@main-color: white;
+@primary-color: white;
 @secondary-color: rgb(243, 123, 29);
 
-@font-face {
-  font-family: CartoonBlocks;
-  src: url('../fonts/from-cartoon-blocks.ttf');
-}
+@import url('https://fonts.googleapis.com/css?family=Bangers');
 
 body {
   padding: 50px;
@@ -18,8 +15,8 @@ h1.main-title {
 
   a {
     font-size: 5em;
-    color: @main-color;
-    font-family: CartoonBlocks, Helvetica, Arial, sans-serif;
+    color: @primary-color;
+    font-family: 'Bangers', cursive;
     text-decoration: none;
   }
 }
@@ -73,4 +70,162 @@ h1.main-title {
       cursor: pointer
     }
   }
+}
+
+#badge {
+  position: relative;
+  background: #cfcfcf;
+  height: 10em;
+  width: 10em;
+  -moz-border-radius: 5em;
+  -webkit-border-radius: 5em;
+  border-radius: 5em;
+}
+
+#badge:before,
+#badge:after {
+  content: '';
+  position: absolute;
+  border-bottom: 7em solid #cfcfcf;
+  border-left: 4em solid transparent;
+  border-right: 4em solid transparent;
+  top: 8em;
+  left: -1em;
+  -webkit-transform: rotate(-140deg);
+  -moz-transform: rotate(-140deg);
+  -ms-transform: rotate(-140deg);
+  -o-transform: rotate(-140deg);
+}
+
+#badge:after {
+  left: auto;
+  right: -1em;
+  -webkit-transform: rotate(140deg);
+  -moz-transform: rotate(140deg);
+  -ms-transform: rotate(140deg);
+  -o-transform: rotate(140deg);
+}
+
+.champion-badge {
+  position: relative;
+  display: inline-block;
+
+  #badge {
+    z-index: 1;
+  }
+
+  img {
+    position: absolute;
+    z-index: 2;
+    border-radius: 20em;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 95%;
+  }
+
+  .points {
+    position: absolute;
+    font-size: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+  }
+}
+
+.top-selection {
+  text-align: center;
+  font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
+  width: 100%;
+  margin: 10em auto;
+  padding: 0 10px 4px;
+  position: relative;
+  color: #444;
+  background: #fff;
+  border: 1px solid #d2d2d2;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    font-family: 'Bangers', cursive;
+  }
+
+  .content {
+    list-style: none;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+  }
+}
+
+.ribbon h3 {
+  display: block;
+  width: 45%;
+  margin: 0.5em 0;
+  padding: 0.25em 0.15em;
+  position: relative;
+  left: -0.75em;
+  color: #cfcfcf;
+  text-shadow: 0 1px 1px #111;
+  border-top: 1px solid #363636;
+  border-bottom: 1px solid #202020;
+  background: #333;
+  background: linear-gradient(top, #383838 0%, #262626 100%);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ribbon h3::before,
+.ribbon h3::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -11px;
+  z-index: -10;
+  border: 5px solid;
+  border-color: #242424 transparent transparent transparent;
+}
+
+.ribbon h3::before {
+  left: 0;
+}
+
+.ribbon h3::after {
+  right: 0;
+}
+
+.ribbon h3::before,
+.ribbon h3::after {
+  width: 10px;
+  height: 10px;
+  bottom: -4px;
+  border: none;
+  border-radius: 10px;
+}
+
+.ribbon h3::before {
+  background: #363636;
+  background: linear-gradient(left, #33aaf8 0%, #0674bb 100%);
+}
+
+.ribbon h3::after {
+  background: #363636;
+  background: linear-gradient(right, #33aaf8 0%, #0674bb 100%);
 }

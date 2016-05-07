@@ -3,5 +3,8 @@
   "main title": "NextChest",
   "form summoner name": "Entrez le nom de l'invocateur",
   "stats title": "Statistiques !",
-  "stats sub title": "Statistiques - Sous titre !"
+  "stats sub title": "Statistiques - Sous titre !",
+  "stats category goal": "Vos meilleures chances d'atteindre l'objectif",
+  "stats category random": "Quelques champions aléatoires",
+  "stats category less played": "Vos champions les moins joués"
 }

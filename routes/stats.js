@@ -3,6 +3,7 @@
 module.exports = function () {
     var express = require('express'),
         router = express.Router(),
+        utils = require('../lib/utils'),
         LolClient = require('../api/lol');
 
     var lolClient = new LolClient();
@@ -21,10 +22,50 @@ module.exports = function () {
         lolClient.getChampionMasteryFromName({
             region: req.params.region.toLowerCase(),
             summonerName: req.params.summonerName.toLowerCase()
-        }, function (error, data) {
+        }, function (error, champions) {
             if (error === null) {
-                res.render('stats/champions', {
-                    data: data
+                lolClient.getChampionsInfos({
+                    region: 'euw',
+                    locale: req.getLocale()
+                }, function (error, result) {
+                    if (error === null) {
+                        Object.keys(champions).forEach(function (key) {
+                            var championId = champions[key].championId;
+                            champions[key].image = 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/' + result.data[championId].image.full;
+                        });
+
+                        res.render('stats/champions', {
+                            champions: champions,
+                            topGoal: utils.getTop({
+                                data: champions,
+                                filter: function(item) {
+                                    return item.chestGranted === false;
+                                },
+                                sort: function (item) {
+                                    return item.championPoints * -1;
+                                }
+                            }),
+                            randomTop: utils.randomTop({
+                                data: champions,
+                                filter: function(item) {
+                                    return item.chestGranted === false;
+                                }
+                            }),
+                            lessPlayed: utils.getTop({
+                                data: champions,
+                                filter: function(item) {
+                                    return item.chestGranted === false;
+                                },
+                                sort: function (item) {
+                                    return item.championPoints;
+                                }
+                            })
+                        });
+                    } else {
+                        res.render('error', {
+                            error: error
+                        });
+                    }
                 });
             } else {
                 res.render('error', {

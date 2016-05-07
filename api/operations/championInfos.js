@@ -13,8 +13,8 @@ LolClient.prototype.getChampionsInfos = function (params, callback) {
     } else {
         this.httpsGetRequest({
             hostPrefix: 'global',
-            path: '/api/lol/static-data/' + params.region + '/v1.2/champion',
-            query: 'champData=allytips,blurb,image,tags&locale=' + params.locale
+            path: '/api/lol/static-data/' + params.region + '/v1.2/champion/' + (params.championId || ''),
+            query: 'champData=allytips,blurb,image,tags&dataById=true&locale=' + params.locale
         }, callback);
     }
 };
