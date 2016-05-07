@@ -37,7 +37,7 @@ LolClient.prototype.addGetRequest = function (params, callback) {
         httpsGetRequest({
             params: params,
             callbacks: [callback]
-        });
+        }).bind(this);
     } else {
         var _ = require('underscore'),
             request = {params: params, callbacks: [callback], asked: 1},
