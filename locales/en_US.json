@@ -4,5 +4,6 @@
   "form summoner name": "Enter the Summoner's name",
   "stats category goal": "Your best chance of achieving the goal",
   "stats category random": "Some random picks",
-  "stats category less played": "Your less played picks"
+  "stats category less-played": "Your less played picks",
+  "stats category no data": "No available data, play more games !"
 }

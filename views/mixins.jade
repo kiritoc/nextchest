@@ -4,8 +4,8 @@ mixin championBadge(img, points)
         #badge
         span.points=points
 
-mixin category(title)
-    .category.ribbon
+mixin category(id, title)
+    .category.ribbon(id=id)
         h3
             span=title
         .content

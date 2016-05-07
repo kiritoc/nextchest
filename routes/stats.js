@@ -12,13 +12,17 @@ module.exports = function () {
         res.redirect('stats/summoner/' + req.body.region + '/' + req.body.summonerName);
     });
 
+    router.get('/summoner/:region/:summonerName', function (req, res) {
+        res.render('stats/champions');
+    });
+
     router.get('/', function (req, res) {
         res.render('stats', {
             regions: lolClient.regions
         });
     });
 
-    router.get('/summoner/:region/:summonerName', function (req, res) {
+    router.get('/summoner/:region/:summonerName/top-categories', function (req, res) {
         lolClient.getChampionMasteryFromName({
             region: req.params.region.toLowerCase(),
             summonerName: req.params.summonerName.toLowerCase()
@@ -34,32 +38,38 @@ module.exports = function () {
                             champions[key].image = lolClient.getImageUrl(result.data[championId].image.full);
                         });
 
-                        res.render('stats/champions', {
-                            champions: champions,
-                            topGoal: utils.getTop({
-                                data: champions,
-                                filter: function(item) {
-                                    return item.chestGranted === false;
-                                },
-                                sort: function (item) {
-                                    return item.championPoints * -1;
-                                }
-                            }),
-                            randomTop: utils.randomTop({
-                                data: champions,
-                                filter: function(item) {
-                                    return item.chestGranted === false;
-                                }
-                            }),
-                            lessPlayed: utils.getTop({
-                                data: champions,
-                                filter: function(item) {
-                                    return item.chestGranted === false;
-                                },
-                                sort: function (item) {
-                                    return item.championPoints;
-                                }
-                            })
+                        res.render('stats/top-categories', {
+                            categories: [{
+                                title: 'goal',
+                                data: utils.getTop({
+                                    data: champions,
+                                    filter: function (item) {
+                                        return item.chestGranted === false;
+                                    },
+                                    sort: function (item) {
+                                        return item.championPoints * -1;
+                                    }
+                                })
+                            }, {
+                                title: 'random',
+                                data: utils.randomTop({
+                                    data: champions,
+                                    filter: function (item) {
+                                        return item.chestGranted === false;
+                                    }
+                                })
+                            }, {
+                                title: 'less-played',
+                                data: utils.getTop({
+                                    data: champions,
+                                    filter: function (item) {
+                                        return item.chestGranted === false;
+                                    },
+                                    sort: function (item) {
+                                        return item.championPoints;
+                                    }
+                                })
+                            }]
                         });
                     } else {
                         res.render('error', {
@@ -72,6 +82,33 @@ module.exports = function () {
                     error: error
                 });
             }
+        });
+    });
+
+    router.get('/summoner/:region/:summonerName/topRandom', function (req, res) {
+        res.render('', {
+            title: 'random',
+            data: utils.randomTop({
+                data: champions,
+                filter: function (item) {
+                    return item.chestGranted === false;
+                }
+            })
+        });
+    });
+
+    router.get('/summoner/:region/:summonerName/topLessPlayed', function (req, res) {
+        res.render('', {
+            title: 'less played',
+            lessPlayed: utils.getTop({
+                data: champions,
+                filter: function (item) {
+                    return item.chestGranted === false;
+                },
+                sort: function (item) {
+                    return item.championPoints;
+                }
+            })
         });
     });
 

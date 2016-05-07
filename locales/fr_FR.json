@@ -4,5 +4,6 @@
   "form summoner name": "Entrez le nom de l'invocateur",
   "stats category goal": "Vos meilleures chances d'atteindre l'objectif",
   "stats category random": "Quelques champions aléatoires",
-  "stats category less played": "Vos champions les moins joués"
+  "stats category less-played": "Vos champions les moins joués",
+  "stats category no data": "Aucune donnée disponible, faites quelques parties de plus !"
 }
