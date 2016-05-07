@@ -4,3 +4,6 @@ NextChest.iml
 
 # Nodes modules
 node_modules
+
+# Env file
+.env
