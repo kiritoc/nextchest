@@ -9,7 +9,7 @@ var redisCache = cacheManager.caching({
     port: process.env.OPENSHIFT_REDIS_PORT || 6379,
     auth_pass: process.env.REDIS_PASSWORD || null,
     db: 0,
-    ttl: 600
+    ttl: 600 // seconds
 });
 
 // listen for redis connection error event

@@ -1,0 +1,13 @@
+include ../mixins
+
+if categories
+    each top in categories
+        +category(top.title, __('stats category ' + top.title))
+            if top.data
+                if top.data.length > 0
+                    each champion in top.data
+                        +championBadge(champion.image, champion.championLevel)
+                else
+                    p.no-data=__('stats category no data')
+            else
+                +spinner()

@@ -1,7 +1,10 @@
 doctype html
+
+block vars
+
 html
     head
-        title= title
+        title=title
 
         link(rel='stylesheet' href='/stylesheets/style.css')
         link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
@@ -17,7 +20,7 @@ html
             include mixins
             block content
 
-        block initJavascript
+        block javascript
 
         //script(type="text/javascript").
             $(function () {

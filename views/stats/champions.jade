@@ -1,24 +1,27 @@
 extends ../layout
 
+block vars
+    - var categories = [{title: 'goal'}, {title: 'random'}, {title: 'less-played'}]
+
+block javascript
+    script(type='text/javascript').
+        $(function () {
+            var categories = JSON.parse('!{JSON.stringify(categories)}');
+
+            $.get(window.location.pathname + '/top-categories' + window.location.search, function (data) {
+                var $data = $(data);
+
+                for (var index = 0; index < categories.length; index++) {
+                    var categoryId = '#' + categories[index].title,
+                            $category = $data.filter(categoryId);
+
+                    if ($category) {
+                        $(categoryId).replaceWith($data.filter(categoryId));
+                    }
+                }
+            });
+        });
+
 block content
     .top-selections
-        +category(__('stats category goal'))
-            if topGoal
-                each champion in topGoal
-                    +championBadge(champion.image, champion.championLevel)
-            else
-                +spinner()
-
-        +category(__('stats category random'))
-            if randomTop
-                each champion in randomTop
-                    +championBadge(champion.image, champion.championLevel)
-            else
-                +spinner()
-
-        +category(__('stats category less played'))
-            if lessPlayed
-                each champion in lessPlayed
-                    +championBadge(champion.image, champion.championLevel)
-            else
-                +spinner()
+        include top-categories
