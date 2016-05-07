@@ -17,9 +17,11 @@ module.exports = function () {
         lolClient.getSummonerIDFromName({
             region: req.params.region.toLowerCase(),
             summonerName: req.params.summonerName.toLowerCase()
-        }, function (error, champions) {
+        }, function (error, summoner) {
             if (error === null) {
-                res.render('stats/champions');
+                res.render('stats/summoner-champions', {
+                    summoner: summoner[req.params.summonerName]
+                });
             } else {
                 res.render('error', {
                     error: error
@@ -88,50 +90,6 @@ module.exports = function () {
                             error: error
                         });
                     }
-                });
-            } else {
-                res.render('error', {
-                    error: error
-                });
-            }
-        });
-    });
-
-    router.get('/summoner/:region/:summonerName/topRandom', function (req, res) {
-        res.render('', {
-            title: 'random',
-            data: utils.randomTop({
-                data: champions,
-                filter: function (item) {
-                    return item.chestGranted === false;
-                }
-            })
-        });
-    });
-
-    router.get('/summoner/:region/:summonerName/topLessPlayed', function (req, res) {
-        res.render('', {
-            title: 'less played',
-            lessPlayed: utils.getTop({
-                data: champions,
-                filter: function (item) {
-                    return item.chestGranted === false;
-                },
-                sort: function (item) {
-                    return item.championPoints;
-                }
-            })
-        });
-    });
-
-    router.get('/champions', function (req, res) {
-        lolClient.getChampionsInfos({
-            region: 'euw',
-            locale: req.getLocale()
-        }, function (error, result) {
-            if (error === null) {
-                res.render('stats/champions', {
-                    data: result.data
                 });
             } else {
                 res.render('error', {
