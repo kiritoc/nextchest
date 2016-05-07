@@ -1,6 +1,7 @@
 extends ../layout
 
 block vars
+    - var page = __('stats champions', {summonerName: summoner.name})
     - var categories = [{title: 'goal'}, {title: 'random'}, {title: 'less-played'}]
 
 block javascript

@@ -1,5 +1,8 @@
 extends ../layout
 
+block vars
+    - var page = __('stats search')
+
 block content
     .stats
         form.summoner.navbar-form.navbar-left(action='' method='post')
