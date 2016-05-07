@@ -1,11 +1,7 @@
 extends ../layout
 
 block content
-    .stats
-        h2=__("stats title")
-
-        p=__("stats sub title")
-
+    .top-selections
         +category(__('stats category goal'))
             each champion in topGoal
                 +championBadge(champion.image, champion.championLevel)
