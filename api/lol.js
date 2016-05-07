@@ -13,7 +13,6 @@ function LolClient() {
     };
 
     if (this.config.key === undefined) {
-        console.log(process.env);
         console.log(LOG_PREFIX + 'No API KEY configured !!');
     }
 
@@ -33,14 +32,12 @@ LolClient.prototype.getImageUrl = function (imageFull) {
 };
 
 LolClient.prototype.addGetRequest = function (params, callback) {
+    var request = {params: params, callbacks: [callback], asked: 1};
+
     if (params.rateLimited !== true) {
-        httpsGetRequest({
-            params: params,
-            callbacks: [callback]
-        }).bind(this);
+        httpsGetRequest.apply(this, [request]);
     } else {
         var _ = require('underscore'),
-            request = {params: params, callbacks: [callback], asked: 1},
             existingRequest = _.findWhere(this.requestsInQueue, {params: params});
 
         if (existingRequest !== undefined) {
