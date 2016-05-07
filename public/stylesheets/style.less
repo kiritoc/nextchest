@@ -1,6 +1,7 @@
 @primary-color: white;
 @secondary-color: rgb(243, 123, 29);
 @third-color: #333;
+@fourth-color: #cfcfcf;
 
 @import url('https://fonts.googleapis.com/css?family=Bangers');
 
@@ -73,9 +74,53 @@ h1.main-title {
   }
 }
 
+.top-selections {
+  .category:first-child {
+    margin: 0 auto;
+  }
+
+  .category {
+    margin: 10em auto;
+    text-align: center;
+    font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
+    width: 100%;
+    padding: 0 1em 0.5em;
+    position: relative;
+    color: #444;
+    background: fade(@third-color, 75);
+    border: 0.2em solid #d2d2d2;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+    -webkit-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+
+    h3 {
+      font-family: 'Bangers', cursive;
+    }
+
+    .content {
+      min-height: 5em;
+      list-style: none;
+
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-flow: row wrap;
+      justify-content: space-around;
+    }
+  }
+}
+
+/*********** BADGE ***********/
+
 #badge {
   position: relative;
-  background: #cfcfcf;
+  background: @fourth-color;
   height: 10em;
   width: 10em;
   -moz-border-radius: 5em;
@@ -87,7 +132,7 @@ h1.main-title {
 #badge:after {
   content: '';
   position: absolute;
-  border-bottom: 7em solid #cfcfcf;
+  border-bottom: 7em solid @fourth-color;
   border-left: 4em solid transparent;
   border-right: 4em solid transparent;
   top: 8em;
@@ -140,46 +185,7 @@ h1.main-title {
   }
 }
 
-.top-selections {
-  .category:first-child {
-    margin: 0 auto;
-  }
-
-  .category {
-    margin: 10em auto;
-    text-align: center;
-    font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
-    width: 100%;
-    padding: 0 1em 0.5em;
-    position: relative;
-    color: #444;
-    background: fade(@third-color, 75);
-    border: 0.2em solid #d2d2d2;
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    border-radius: 0.3em;
-    -webkit-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-
-    h3 {
-      font-family: 'Bangers', cursive;
-    }
-
-    .content {
-      list-style: none;
-
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-
-      -webkit-flex-flow: row wrap;
-      justify-content: space-around;
-    }
-  }
-}
+/*********** RIBBON ***********/
 
 .ribbon h3 {
   display: block;
@@ -188,7 +194,7 @@ h1.main-title {
   padding: 0.25em 0.15em;
   position: relative;
   left: -0.75em;
-  color: #cfcfcf;
+  color: @fourth-color;
   text-shadow: 0 1px 1px #111;
   border-top: 1px solid #363636;
   border-bottom: 1px solid #202020;
@@ -235,4 +241,69 @@ h1.main-title {
 .ribbon h3::after {
   background: #363636;
   background: linear-gradient(right, #33aaf8 0%, #0674bb 100%);
+}
+
+
+/*********** SPINNER ***********/
+
+.spinner {
+  margin:0 auto;
+  width: 50px;
+  height: 40px;
+
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.spinner > div {
+  background-color: @fourth-color;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+       transform: scaleY(1.0);
+       -webkit-transform: scaleY(1.0);
+     }
 }
