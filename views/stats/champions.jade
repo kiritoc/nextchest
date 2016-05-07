@@ -3,13 +3,22 @@ extends ../layout
 block content
     .top-selections
         +category(__('stats category goal'))
-            each champion in topGoal
-                +championBadge(champion.image, champion.championLevel)
+            if topGoal
+                each champion in topGoal
+                    +championBadge(champion.image, champion.championLevel)
+            else
+                +spinner()
 
         +category(__('stats category random'))
-            each champion in randomTop
-                +championBadge(champion.image, champion.championLevel)
+            if randomTop
+                each champion in randomTop
+                    +championBadge(champion.image, champion.championLevel)
+            else
+                +spinner()
 
         +category(__('stats category less played'))
-            each champion in lessPlayed
-                +championBadge(champion.image, champion.championLevel)
+            if lessPlayed
+                each champion in lessPlayed
+                    +championBadge(champion.image, champion.championLevel)
+            else
+                +spinner()

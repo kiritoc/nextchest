@@ -1,46 +1,118 @@
 'use strict';
 
+const LOG_PREFIX = 'LOL Api Client - ';
+
 function LolClient() {
     // API Request configuration
     this.config = {
+        baseImagesUrl: 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/',
         hostSuffix: '.api.pvp.net',
         port: 443,
-        key: 'a4fa26df-f21c-4943-99e6-5176149748c3'
+        key: 'a4fa26df-f21c-4943-99e6-5176149748c3',
+        rateLimitRequests: 1 // seconds
     };
 
     // Available regions / platforms
     this.regions = getRegions();
     this.platforms = getPlatforms();
 
+    this.requestsInQueue = [];
+    this.requestsTimer = null;
+
     // Load operations files
     includeFiles('*/operations/*.js');
 }
 
-LolClient.prototype.httpsGetRequest = function (params, callback) {
-    var https = require('https');
-    const LOG_PREFIX = 'LOL Api Client - ';
+LolClient.prototype.getImageUrl = function (imageFull) {
+    return this.config.baseImagesUrl + imageFull;
+};
 
-    if (params !== undefined && params.path !== undefined) {
-        var request,
-            hostPrefix = params.hostPrefix || 'global',
+LolClient.prototype.addGetRequest = function (params, callback) {
+    if (params.rateLimited !== true) {
+        httpsGetRequest({
+            params: params,
+            callbacks: [callback]
+        });
+    } else {
+        var _ = require('underscore'),
+            request = {params: params, callbacks: [callback], asked: 1},
+            existingRequest = _.findWhere(this.requestsInQueue, {params: params});
+
+        if (existingRequest !== undefined) {
+            request.asked += existingRequest.asked;
+            request.callbacks = existingRequest.callbacks.concat(callback);
+            this.requestsInQueue = _.without(this.requestsInQueue, existingRequest);
+        }
+
+        var index = Math.max(_.sortedIndex(this.requestsInQueue, request, 'asked') - 1, 0);
+        this.requestsInQueue.splice(index, 0, request);
+
+        if (this.requestsInQueue.length === 0) {
+            stopRequestsTimer.apply(this);
+        } else if (this.requestsTimer === null) {
+            this.requestsTimer = setInterval(sendRequests.bind(this), this.config.rateLimitRequests * 1000);
+            console.log(LOG_PREFIX + this.config.rateLimitRequests + ' request(s) with limited rate will be sent each second');
+        }
+    }
+};
+
+/////////////////////// PRIVATE METHODS ///////////////////////
+
+function stopRequestsTimer() {
+    clearInterval(this.requestsTimer);
+    this.requestsTimer = null;
+}
+
+function sendRequests() {
+    var _ = require('underscore'),
+        async = require('async'),
+        queue = async.queue(httpsGetRequest.bind(this), this.config.rateLimitRequests),
+        index = 0;
+
+    console.log(LOG_PREFIX + 'Send requests - ' + this.requestsInQueue.length + ' remaining request(s)');
+
+    // Send maximum requests without reach the rate limit
+    while (index < this.config.rateLimitRequests && this.requestsInQueue.length > 0) {
+        const request = _.clone(this.requestsInQueue[index]);
+        queue.push(request, function (err) {
+            // If there is an error, we re add the request to the queue
+            console.log(LOG_PREFIX + 'Error while sending request ' + err);
+            this.addGetRequest(request.params, request.callbacks);
+        }.bind(this));
+        this.requestsInQueue.splice(index, 1);
+        index++;
+    }
+
+    if (this.requestsInQueue.length === 0) {
+        stopRequestsTimer.apply(this);
+    }
+}
+
+function httpsGetRequest(request) {
+    var https = require('https'),
+        utils = require('../lib/utils');
+
+    if (request.params !== undefined && request.params.path !== undefined) {
+        var httpsRequest,
+            hostPrefix = request.params.hostPrefix || 'global',
             options = {
                 host: hostPrefix + this.config.hostSuffix,
-                port: params.port || this.config.port,
-                path: params.path
+                port: request.params.port || this.config.port,
+                path: request.params.path
             };
 
         console.log(LOG_PREFIX + 'Request ' + options.host + ':' + options.port + options.path);
 
         // Add query
-        if (params.query === undefined) {
+        if (request.params.query === undefined) {
             options.path += '?api_key=' + this.config.key;
         } else {
-            options.path += '?' + params.query + '&api_key=' + this.config.key;
+            options.path += '?' + request.params.query + '&api_key=' + this.config.key;
         }
 
-        request = https.get(options);
+        httpsRequest = https.get(options);
 
-        request.on('response', function (response) {
+        httpsRequest.on('response', function (response) {
             var buffer = '';
 
             response.on('data', function (chunk) {
@@ -50,11 +122,10 @@ LolClient.prototype.httpsGetRequest = function (params, callback) {
             response.on('end', function () {
                 try {
                     var data = JSON.parse(buffer);
-                    callback(null, data);
+                    utils.callMultipleCallbacks(request.callbacks, null, data);
                 } catch (exception) {
                     console.log(LOG_PREFIX + 'Error while processing data', exception);
-
-                    callback({
+                    utils.callMultipleCallbacks(request.callbacks, {
                         statusCode: 500,
                         message: exception
                     });
@@ -62,16 +133,14 @@ LolClient.prototype.httpsGetRequest = function (params, callback) {
             });
         });
 
-        request.on('error', function (error) {
+        httpsRequest.on('error', function (error) {
             console.log(LOG_PREFIX + error.message);
             throw LOG_PREFIX + 'Error while requesting to API: ' + error.code;
         });
 
-        request.end();
+        httpsRequest.end();
     }
-};
-
-/////////////////////// PRIVATE METHODS ///////////////////////
+}
 
 /**
  * Get list of available regions

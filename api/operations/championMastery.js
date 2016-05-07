@@ -19,7 +19,8 @@ LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
     } else {
         var keyCache = keyCacheSuffix + JSON.stringify(params);
         cache.wrap(keyCache, function (cb) {
-            this.httpsGetRequest({
+            this.addGetRequest({
+                rateLimited: true,
                 hostPrefix: params.region,
                 path: '/championmastery/location/' + platformId + '/player/' + params.playerId + '/champions'
             }, cb);
