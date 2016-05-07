@@ -31,7 +31,7 @@ module.exports = function () {
                     if (error === null) {
                         Object.keys(champions).forEach(function (key) {
                             var championId = champions[key].championId;
-                            champions[key].image = 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/' + result.data[championId].image.full;
+                            champions[key].image = lolClient.getImageUrl(result.data[championId].image.full);
                         });
 
                         res.render('stats/champions', {

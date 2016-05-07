@@ -15,7 +15,8 @@ LolClient.prototype.getChampionsInfos = function (params, callback) {
         var keyCache = keyCacheSuffix + '[' + params.locale + ']' + JSON.stringify(params);
 
         cache.wrap(keyCache, function (cb) {
-            this.httpsGetRequest({
+            this.addGetRequest({
+                rateLimited: false,
                 hostPrefix: 'global',
                 path: '/api/lol/static-data/' + params.region + '/v1.2/champion',
                 query: 'champData=allytips,blurb,image,tags&dataById=true&locale=' + params.locale

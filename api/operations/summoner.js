@@ -15,7 +15,8 @@ LolClient.prototype.getSummonerIDFromName = function (params, callback) {
         });
     } else {
         cache.wrap(keyCache, function (cb) {
-            this.httpsGetRequest({
+            this.addGetRequest({
+                rateLimited: true,
                 hostPrefix: params.region,
                 path: '/api/lol/' + params.region + '/v1.4/summoner/by-name/' + params.summonerName
             }, cb);
