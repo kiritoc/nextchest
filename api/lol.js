@@ -2,6 +2,12 @@
 
 const LOG_PREFIX = 'LOL Api Client - ';
 
+/**
+ * LOL API object - Will make all the requests to the Riot API
+ * Read all operations inside the operations folder
+ *
+ * @constructor
+ */
 function LolClient() {
     // API Request configuration
     var ddragonVersion = process.env.DDRAGON_VERSION || '6.9.1';
@@ -30,14 +36,34 @@ function LolClient() {
     includeFiles('*/operations/*.js');
 }
 
+/**
+ * Get the url of the champion image
+ *
+ * @param imageFull - image name returned by API
+ * @returns url
+ */
 LolClient.prototype.getChampionImageUrl = function (imageFull) {
     return this.config.baseChampionImageUrl + imageFull;
 };
 
+/**
+ * Get the url of the summoner image
+ *
+ * @param image - image name returned by API
+ * @returns url
+ */
 LolClient.prototype.getSummonerImageUrl = function (image) {
     return this.config.baseSummonerImageUrl + image + '.png';
 };
 
+/**
+ * Add API request to the queue
+ * If there is params has no rateLimited configured, it will send the request immediately, otherwise add it to the queue and will be requested ASAP
+ * (Queue is ordered by requests priority, each time a request is requested, the request priority is increased)
+ *
+ * @param params - {rateLimited - optional, params of the request}
+ * @param callback
+ */
 LolClient.prototype.addGetRequest = function (params, callback) {
     var request = {params: params, callbacks: [callback], asked: 1};
 
@@ -72,6 +98,9 @@ function stopRequestsTimer() {
     this.requestsTimer = null;
 }
 
+/**
+ * Send the maximum of requests on the queue without reaching the rate limit
+ */
 function sendRequests() {
     var _ = require('underscore'),
         async = require('async'),
@@ -97,6 +126,11 @@ function sendRequests() {
     }
 }
 
+/**
+ * Send an https request - GET Type
+ *
+ * @param request
+ */
 function httpsGetRequest(request) {
     var https = require('https'),
         utils = require('../lib/utils');
@@ -158,7 +192,8 @@ function httpsGetRequest(request) {
 
 /**
  * Get list of available regions
- * @returns {{br: string, eune: string, euw: string, jp: string, kr: string, lan: string, las: string, na: string, oce: string, ru: string, tr: string}}
+ *
+ * @returns {regions}
  */
 function getRegions() {
     return {
@@ -179,7 +214,8 @@ function getRegions() {
 /**
  * Get list of available platforms
  * (Which means regions name followed by 1, eg: euw1)
- * @returns {{}}
+ *
+ * @returns {platforms}
  */
 function getPlatforms() {
     var regions = getRegions(),
@@ -196,6 +232,7 @@ function getPlatforms() {
 
 /**
  * Include files found from path
+ *
  * @param path
  */
 function includeFiles(path) {
