@@ -7,7 +7,7 @@ Created by: Kiritoc
 
 Working App: <http://nextchest-kirdox.rhcloud.com/>
 
-> NexChest is a website designed by a summoner for summoners.<br>
+> NextChest is a website designed by a summoner for summoners.<br>
 > This app was created in order to help chest hunters meanwhile training my development skills.<br>
 > The app is using a cache (Redis) in order to decrease response times as well as the total number of requests made.
 Furthermore a queuing system was implemented to be sure to not exceed the rate limit of the Riot API.
