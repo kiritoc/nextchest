@@ -16,5 +16,7 @@
   "stats category no data": "Aucune donnée disponible, faites quelques parties de plus !",
   "page not found": "La page demandée est introuvable",
   "error status_code": "Erreur {{{status_code}}}",
-  "footer text": "Une expérimentation proposée par Kiritoc - {{{footerLink}}}"
+  "footer text": "Une expérimentation proposée par Kiritoc - {{{footerLink}}}",
+  "change language to en": "Mettre la langue en anglais",
+  "change language to fr": "Mettre la langue en français"
 }
