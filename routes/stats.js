@@ -3,7 +3,6 @@
 module.exports = function () {
     var express = require('express'),
         router = express.Router(),
-        utils = require('../lib/utils'),
         LolClient = require('../api/lol');
 
     var lolClient = new LolClient();
@@ -59,37 +58,7 @@ module.exports = function () {
 
                         res.render('stats/top-categories', {
                             champions: result.data,
-                            categories: [{
-                                title: 'goal',
-                                data: utils.getTop({
-                                    data: champions,
-                                    filter: function (item) {
-                                        return item.chestGranted === false;
-                                    },
-                                    sort: function (item) {
-                                        return item.championPoints * -1;
-                                    }
-                                })
-                            }, {
-                                title: 'random',
-                                data: utils.randomTop({
-                                    data: champions,
-                                    filter: function (item) {
-                                        return item.chestGranted === false;
-                                    }
-                                })
-                            }, {
-                                title: 'less-played',
-                                data: utils.getTop({
-                                    data: champions,
-                                    filter: function (item) {
-                                        return item.chestGranted === false;
-                                    },
-                                    sort: function (item) {
-                                        return item.championPoints;
-                                    }
-                                })
-                            }]
+                            categories: getTopCategories(req.query.categories, champions)
                         });
                     } else {
                         res.render('error', {
@@ -107,3 +76,65 @@ module.exports = function () {
 
     return router;
 };
+
+/**
+ * Get top from each categories
+ *
+ * @param categories
+ * @param champions
+ * @returns {Array}
+ */
+function getTopCategories(categories, champions) {
+    var utils = require('../lib/utils'),
+        result = [];
+
+    for (var index in categories || []) {
+        if (categories.hasOwnProperty(index)) {
+            var categoryType = categories[index].title;
+
+            switch (categoryType) {
+                case 'goal':
+                    result.push({
+                        title: 'goal',
+                        data: utils.getTop({
+                            data: champions,
+                            filter: function (item) {
+                                return item.chestGranted === false;
+                            },
+                            sort: function (item) {
+                                return item.championPoints * -1;
+                            }
+                        })
+                    });
+                    break;
+                case 'random':
+                    result.push({
+                        title: 'random',
+                        data: utils.randomTop({
+                            data: champions,
+                            filter: function (item) {
+                                return item.chestGranted === false;
+                            }
+                        })
+                    });
+                    break;
+                case 'less-played':
+                    result.push({
+                        title: 'less-played',
+                        data: utils.getTop({
+                            data: champions,
+                            filter: function (item) {
+                                return item.chestGranted === false;
+                            },
+                            sort: function (item) {
+                                return item.championPoints;
+                            }
+                        })
+                    });
+                    break;
+            }
+        }
+    }
+
+    return result;
+}

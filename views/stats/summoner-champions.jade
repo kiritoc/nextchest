@@ -7,9 +7,16 @@ block vars
 block javascript
     script(type='text/javascript').
         $(function () {
-            var categories = JSON.parse('!{JSON.stringify(categories)}');
+            var categories = JSON.parse('!{JSON.stringify(categories)}'),
+                    query = window.location.search || '?',
+                    params = $.param({categories: categories});
 
-            $.get(window.location.pathname + '/top-categories' + window.location.search, function (data) {
+            if (query !== '?') {
+                query += '&';
+            }
+            query += params;
+
+            $.get(window.location.pathname + '/top-categories' + query, function (data) {
                 var $data = $(data),
                         globalError = $data.find('.error').html();
 

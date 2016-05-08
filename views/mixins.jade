@@ -1,8 +1,8 @@
-mixin championBadge(stat)
+mixin championBadge(stat, title)
     .champion-badge
-        img.js-champion-img(src=stat.image data-id=stat.championId)
+        img.js-champion-img(src=stat.image data-id=stat.championId title=title)
         .background
-        span.points=stat.championLevel
+        span.points(title=__('champion level'))=stat.championLevel
 
 mixin championInfos(info, hide)
     .champion-infos(data-id=info.id class=hide === true ? 'hide-content' : '')
