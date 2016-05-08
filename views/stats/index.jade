@@ -3,6 +3,14 @@ extends ../layout
 block vars
     - var page = __('stats search')
 
+block javascript
+    script(type='text/javascript').
+        $(function () {
+            $('.region').click(function () {
+                var selectedRegion = $(this).find('input').val();
+                document.cookie = 'region = ' + selectedRegion;
+            });
+        });
 block content
     .stats
         form.summoner.navbar-form.navbar-left(action='' method='post')
@@ -14,5 +22,8 @@ block content
             .regions.btn-group(role='group')
                 each region in regions
                     label.region
-                        input(type='radio' name='region' value=region checked)=region
+                        - if (region.toLowerCase() == defaultRegion.toLowerCase())
+                            input(type='radio' name='region' value=region checked)=region
+                        - else
+                            input(type='radio' name='region' value=region)=region
                         span=region

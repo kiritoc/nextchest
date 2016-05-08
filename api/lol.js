@@ -4,7 +4,7 @@ const LOG_PREFIX = 'LOL Api Client - ';
 
 function LolClient() {
     // API Request configuration
-    var ddragonVersion = '6.8.1';
+    var ddragonVersion = process.env.DDRAGON_VERSION || '6.9.1';
 
     this.config = {
         baseChampionImageUrl: 'http://ddragon.leagueoflegends.com/cdn/' + ddragonVersion + '/img/champion/',
@@ -36,7 +36,7 @@ LolClient.prototype.getChampionImageUrl = function (imageFull) {
 
 LolClient.prototype.getSummonerImageUrl = function (image) {
     return this.config.baseSummonerImageUrl + image + '.png';
-}
+};
 
 LolClient.prototype.addGetRequest = function (params, callback) {
     var request = {params: params, callbacks: [callback], asked: 1};
@@ -149,7 +149,7 @@ function httpsGetRequest(request) {
 
         httpsRequest.on('error', function (error) {
             console.log(LOG_PREFIX + error.message);
-            throw LOG_PREFIX + 'Error while requesting to API: ' + error.code;
+            utils.callMultipleCallbacks(request.callbacks, error);
         });
 
         httpsRequest.end();

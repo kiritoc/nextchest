@@ -3,7 +3,8 @@
 var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
-const keyCacheSuffix = 'championsInfos';
+const keyCacheSuffix = 'championsInfos',
+    ttl = 86400; // 1 day
 
 LolClient.prototype.getChampionsInfos = function (params, callback) {
     if (params.region === undefined || params.locale === undefined) {
@@ -21,7 +22,7 @@ LolClient.prototype.getChampionsInfos = function (params, callback) {
                 path: '/api/lol/static-data/' + params.region + '/v1.2/champion',
                 query: 'champData=allytips,blurb,image,tags&dataById=true&locale=' + params.locale
             }, cb);
-        }.bind(this), {ttl: 86400}, callback);
+        }.bind(this), {ttl: ttl}, callback);
     }
 };
 

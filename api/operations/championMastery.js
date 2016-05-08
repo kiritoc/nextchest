@@ -3,7 +3,8 @@
 var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
-const keyCacheSuffix = "championMastery";
+const keyCacheSuffix = "championMastery",
+    ttl = 1800; // 30 minutes
 
 require('./summoner');
 
@@ -24,7 +25,7 @@ LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
                 hostPrefix: params.region,
                 path: '/championmastery/location/' + platformId + '/player/' + params.playerId + '/champions'
             }, cb);
-        }.bind(this), callback);
+        }.bind(this), {ttl: ttl}, callback);
     }
 };
 

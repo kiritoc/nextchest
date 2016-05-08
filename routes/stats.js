@@ -21,6 +21,8 @@ module.exports = function () {
             if (error === null) {
                 var summoner = result[req.params.summonerName];
                 summoner.image = lolClient.getSummonerImageUrl(summoner.profileIconId);
+                delete summoner.profileIconId;
+
                 res.render('stats/summoner-champions', {
                     summoner: summoner
                 });
@@ -34,7 +36,8 @@ module.exports = function () {
 
     router.get('/', function (req, res) {
         res.render('stats', {
-            regions: lolClient.regions
+            regions: lolClient.regions,
+            defaultRegion: req.cookies.region || 'euw'
         });
     });
 
@@ -45,7 +48,7 @@ module.exports = function () {
         }, function (error, champions) {
             if (error === null) {
                 lolClient.getChampionsInfos({
-                    region: 'euw',
+                    region: req.params.region.toLowerCase(),
                     locale: req.getLocale()
                 }, function (error, result) {
                     if (error === null) {
@@ -53,8 +56,8 @@ module.exports = function () {
                             var championId = champions[key].championId;
                             champions[key].image = lolClient.getChampionImageUrl(result.data[championId].image.full);
                         });
-
                         res.render('stats/top-categories', {
+                            champions: result.data,
                             categories: [{
                                 title: 'goal',
                                 data: utils.getTop({

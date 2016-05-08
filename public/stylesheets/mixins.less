@@ -1,0 +1,61 @@
+/*********** PREFIXERS MIXINS ***********/
+
+.border-radius(@arguments) {
+  border-radius: @arguments;
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  //-o-border-radius: @arguments; // Does'nt exists
+}
+
+.box-shadow(@arguments) {
+  box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -o-box-shadow: @arguments;
+}
+
+.transform(@arguments) {
+  transform: @arguments;
+  -webkit-transform: @arguments;
+  -moz-transform: @arguments;
+  -o-transform: @arguments;
+}
+
+.flex-flow(@arguments) {
+  flex-flow: @arguments;
+  -webkit-flex-flow: @arguments;
+  //-moz-flex-flow: @arguments; // Does'nt exists
+  //-o-flex-flow: @arguments; // Does'nt exists
+}
+
+.animation-delay(@arguments) {
+  animation-delay: @arguments;
+  -webkit-animation-delay: @arguments;
+  -moz-animation-delay: @arguments;
+  //-o-animationa-delay: @arguments; // Does'nt exists
+}
+
+.animation(@arguments) {
+  animation: @arguments;
+  -webkit-animation: @arguments;
+  -moz-animation: @arguments;
+  //-o-animationa: @arguments; // Does'nt exists
+}
+
+.keyframes (@name, @arguments) {
+  @-webkit-keyframes @name {
+    @arguments();
+  }
+  @-moz-keyframes @name {
+    @arguments();
+  }
+  @-ms-keyframes @name {
+    @arguments();
+  }
+  @-o-keyframes @name {
+    @arguments();
+  }
+  @keyframes @name {
+    @arguments();
+  }
+}

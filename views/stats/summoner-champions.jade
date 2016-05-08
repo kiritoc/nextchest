@@ -10,19 +10,45 @@ block javascript
             var categories = JSON.parse('!{JSON.stringify(categories)}');
 
             $.get(window.location.pathname + '/top-categories' + window.location.search, function (data) {
-                var $data = $(data);
+                var $data = $(data),
+                        globalError = $data.find('.error').html();
 
+                // Replace new content
                 for (var index = 0; index < categories.length; index++) {
                     var categoryId = '#' + categories[index].title,
                             $category = $data.filter(categoryId);
 
-                    if ($category) {
+                    if ($category.length > 0) {
                         $(categoryId).replaceWith($data.filter(categoryId));
+                    } else {
+                        $(categoryId).find('.content').html(globalError);
                     }
                 }
+
+                // Add click event
+                $('.js-champion-img').click(function () {
+                    var championId = $(this).data('id'),
+                            $championsInfos = $(this).closest('.content').find('.champions-infos'),
+                            $selectedChampionInfo = $championsInfos.find('[data-id=' + championId + ']');
+
+                    $championsInfos.find('[data-id]').each(function () {
+                        if ($(this).data('id') === $selectedChampionInfo.data('id')) {
+                            $selectedChampionInfo.slideToggle('slow');
+                        } else {
+                            $(this).slideUp('slow');
+                        }
+                    });
+                });
             });
         });
 
 block content
+    .current-summoner!=__('summoner informations', {summoner: summoner.name + ' (' + __('summoner level', {level: summoner.summonerLevel}) + ')'})
+    //'<img src=' + summoner.image + '>' +
+        //.avatar
+            img(src=summoner.image)
+            .level=summoner.summonerLevel
+        //.name=summoner.name
+
     .top-selections
         include top-categories

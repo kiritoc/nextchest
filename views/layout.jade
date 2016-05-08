@@ -17,16 +17,27 @@ html
             .container
                 h1.main-title
                     a(href="/", title= __('main title'), alt= __('main title'))=__('main title')
+                h2.subtitle=__('subtitle')
         .container
             include mixins
             block content
 
-        block javascript
+        footer.text-center
+            h5!=__('footer text', {footerLink: '<a href="https://github.com/kirdox/nextchest">GitHub</a>'})
 
-        //script(type="text/javascript").
+            p
+                span.fa.fa-globe &nbsp;
+                span
+                    a(href='', title=__('change language to fr'), name='fr_FR').js-set-lang fr
+                    | &nbsp;
+                    a(href='', title=__('change language to en'), name='en_US').js-set-lang en
+
+        script(type="text/javascript").
             $(function () {
                 $('.js-set-lang').click(function () {
                     document.cookie = "lang =" + $(this).attr('name');
                     location.reload();
                 });
             });
+
+        block javascript

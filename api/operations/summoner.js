@@ -3,7 +3,8 @@
 var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
-const keyCacheSuffix = 'summoner';
+const keyCacheSuffix = 'summoner',
+    ttl = 86400;
 
 LolClient.prototype.getSummonerIDFromName = function (params, callback) {
     var keyCache = keyCacheSuffix + JSON.stringify(params);
@@ -20,7 +21,7 @@ LolClient.prototype.getSummonerIDFromName = function (params, callback) {
                 hostPrefix: params.region,
                 path: '/api/lol/' + params.region + '/v1.4/summoner/by-name/' + params.summonerName
             }, cb);
-        }.bind(this), {ttl: 86400}, callback);
+        }.bind(this), {ttl: ttl}, callback);
     }
 };
 
