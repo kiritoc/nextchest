@@ -1,11 +1,15 @@
+@import 'mixins';
+
 @primary-color: white;
 @secondary-color: rgb(243, 123, 29);
 @third-color: #333;
 @fourth-color: #cfcfcf;
 
 @import url('https://fonts.googleapis.com/css?family=Bangers');
+@import url('https://fonts.googleapis.com/css?family=Carter+One');
 
 body {
+  cursor: default;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
@@ -21,6 +25,33 @@ h1.main-title {
     font-family: 'Bangers', cursive;
     text-decoration: none;
   }
+
+  margin-bottom: 0;
+}
+
+h2.subtitle {
+  text-align: center;
+  font-size: 2.5em;
+  color: @primary-color;
+  font-family: 'Bangers', cursive;
+  text-decoration: none;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.hide-content {
+  display: none;
+}
+
+footer {
+  a, a:visited, p {
+    color: fade(@primary-color, 75);
+    text-decoration: none;
+  }
+  a:hover {
+    color: fade(@primary-color, 50);
+    text-decoration: none;
+  }
 }
 
 .stats form.summoner {
@@ -29,8 +60,8 @@ h1.main-title {
   width: 100%;
   padding: 20px 40px 20px 30px;
   border: 0;
-  border-radius: 4px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  .border-radius(4px);
+  .box-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
   .search {
     position: relative;
@@ -55,7 +86,7 @@ h1.main-title {
     margin-top: 1em;
     background: rgba(255, 255, 255, 0.5);
     font-size: 0.75em;
-    border-radius: 1em;
+    .border-radius(1em);
 
     .region {
       :checked + span {
@@ -74,6 +105,13 @@ h1.main-title {
   }
 }
 
+.current-summoner {
+  font-family: 'Carter One', cursive;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
 .top-selections {
   .category:first-child {
     margin: 0 auto;
@@ -89,34 +127,60 @@ h1.main-title {
     color: #444;
     background: fade(@third-color, 75);
     border: 0.2em solid #d2d2d2;
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    border-radius: 0.3em;
-    -webkit-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+    .border-radius(0.3em);
+    .box-shadow(0 0.1em 0.3em rgba(0, 0, 0, 0.1));
 
     h3 {
       font-family: 'Bangers', cursive;
     }
 
     .content {
-      min-height: 5em;
-      list-style: none;
+      .badges {
+        min-height: 5em;
+        list-style: none;
 
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
+        display: flex;
 
-      -webkit-flex-flow: row wrap;
-      justify-content: space-around;
+        .flex-flow(row wrap);
+        justify-content: space-around;
 
-      .no-data {
-        color: #cfcfcf;
-        font-family: cursive;
+        .no-data {
+          color: @fourth-color;
+          font-family: cursive;
+          font-size: 1.5em;
+        }
+      }
+
+      color: @fourth-color;
+    }
+  }
+
+  .champions-infos {
+    margin-top: 5em;
+    color: @fourth-color;
+    font-family: 'Bangers', cursive;
+
+    .champion-infos {
+      text-align: start;
+      .title {
         font-size: 1.5em;
+      }
+      .name {
+        font-size: 3em;
+      }
+      .content {
+        display: inline-block;
+        font-size: 1.75em;
+        p {
+          display: inline-block;
+          font-family: 'Carter One', cursive;
+          font-size: 0.75em;
+          margin: 1em;
+        }
+      }
+
+      .subtitle {
+        font-family: 'Carter One', cursive;
       }
     }
   }
@@ -124,52 +188,42 @@ h1.main-title {
 
 /*********** BADGE ***********/
 
-#badge {
-  position: relative;
-  background: @fourth-color;
-  height: 10em;
-  width: 10em;
-  -moz-border-radius: 5em;
-  -webkit-border-radius: 5em;
-  border-radius: 5em;
-}
-
-#badge:before,
-#badge:after {
-  content: '';
-  position: absolute;
-  border-bottom: 7em solid @fourth-color;
-  border-left: 4em solid transparent;
-  border-right: 4em solid transparent;
-  top: 8em;
-  left: -1em;
-  -webkit-transform: rotate(-140deg);
-  -moz-transform: rotate(-140deg);
-  -ms-transform: rotate(-140deg);
-  -o-transform: rotate(-140deg);
-}
-
-#badge:after {
-  left: auto;
-  right: -1em;
-  -webkit-transform: rotate(140deg);
-  -moz-transform: rotate(140deg);
-  -ms-transform: rotate(140deg);
-  -o-transform: rotate(140deg);
-}
-
 .champion-badge {
   position: relative;
   display: inline-block;
 
-  #badge {
+  .background {
     z-index: 1;
+    position: relative;
+    background: @fourth-color;
+    height: 10em;
+    width: 10em;
+    .border-radius(5em);
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      border-bottom: 7em solid @fourth-color;
+      border-left: 4em solid transparent;
+      border-right: 4em solid transparent;
+      top: 8em;
+      left: -1em;
+      .transform(rotate(-140deg));
+    }
+
+    &:after {
+      left: auto;
+      right: -1em;
+      .transform(rotate(140deg));
+    }
   }
 
   img {
+    cursor: pointer;
     position: absolute;
     z-index: 2;
-    border-radius: 20em;
+    .border-radius(20em);
     top: 0;
     bottom: 0;
     left: 0;
@@ -179,6 +233,7 @@ h1.main-title {
   }
 
   .points {
+    color: @third-color;
     font-family: 'Bangers', cursive;
     position: absolute;
     font-size: 2em;
@@ -193,24 +248,31 @@ h1.main-title {
 
 /*********** RIBBON ***********/
 
-.ribbon h3 {
-  display: block;
-  width: 45%;
-  margin: 0.5em 0;
+.ribbon, .partial-ribbon {
   padding: 0.25em 0.15em;
-  position: relative;
-  left: -0.75em;
   color: @fourth-color;
   text-shadow: 0 1px 1px #111;
   border-top: 1px solid #363636;
   border-bottom: 1px solid #202020;
   background: @third-color;
-  background: linear-gradient(top, #383838 0%, #262626 100%);
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(top, #383838 0, #262626 100%);
+  .border-radius(4px);
+  .box-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
-.ribbon h3::before {
+.partial-ribbon {
+  padding-left: 0.5em;
+}
+
+.ribbon {
+  display: block;
+  width: 45%;
+  margin: 0.5em 0;
+  position: relative;
+  left: -0.75em;
+}
+
+.ribbon::before {
   content: '';
   display: block;
   width: 0;
@@ -222,50 +284,44 @@ h1.main-title {
   border-color: #242424 transparent transparent transparent;
 }
 
-.ribbon h3::before {
+.ribbon::before {
   left: 0;
 }
 
-.ribbon h3::after {
+.ribbon::after {
   right: 0;
 }
 
-.ribbon h3::before,
-.ribbon h3::after {
+.ribbon::before,
+.ribbon::after {
   width: 10px;
   height: 10px;
   bottom: -4px;
   border: none;
-  border-radius: 10px;
+  .border-radius(10px);
 }
 
-.ribbon h3::before {
+.ribbon::before {
   background: #363636;
   background: linear-gradient(left, #33aaf8 0%, #0674bb 100%);
 }
 
-.ribbon h3::after {
+.ribbon::after {
   background: #363636;
   background: linear-gradient(right, #33aaf8 0%, #0674bb 100%);
 }
 
-
 /*********** SPINNER ***********/
 
 .spinner {
-  margin:0 auto;
+  margin: 0 auto;
   width: 50px;
   height: 40px;
 
   list-style: none;
-
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
 
-  -webkit-flex-flow: row wrap;
+  .flex-flow(row wrap);
   justify-content: space-around;
 }
 
@@ -275,41 +331,27 @@ h1.main-title {
   width: 6px;
   display: inline-block;
 
-  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  .animation(sk-stretchdelay 1.2s infinite ease-in-out);
 }
 
 .spinner .rect2 {
-  -webkit-animation-delay: -1.1s;
-  animation-delay: -1.1s;
+  .animation-delay(-1.1s);
 }
 
 .spinner .rect3 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
+  .animation-delay(-1.0s);
 }
 
 .spinner .rect4 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
+  .animation-delay(-0.9s);
 }
 
 .spinner .rect5 {
-  -webkit-animation-delay: -0.8s;
-  animation-delay: -0.8s;
+  .animation-delay(-0.8s);
 }
 
-@-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-  20% { -webkit-transform: scaleY(1.0) }
-}
-
-@keyframes sk-stretchdelay {
-  0%, 40%, 100% {
-    transform: scaleY(0.4);
-    -webkit-transform: scaleY(0.4);
-  }  20% {
-       transform: scaleY(1.0);
-       -webkit-transform: scaleY(1.0);
-     }
-}
+.keyframes(sk-stretchdelay; { 0%, 40%, 100% {
+  .transform(scaleY(0.4));
+} 20% {
+    .transform(scaleY(1.0));
+  } });
