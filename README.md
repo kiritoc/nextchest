@@ -25,4 +25,4 @@ Thanks to the following 3rd party projects that were used for NextChest.
 * [underscore](http://underscorejs.org/)
 * [intelliJ](https://www.jetbrains.com/idea/)
 
-And big thanks to[StackOverflow](http://stackoverflow.com/)and[RiotGames contest](https://developer.riotgames.com/)!
+And big thanks to [StackOverflow](http://stackoverflow.com/) and [RiotGames contest](https://developer.riotgames.com/) !
