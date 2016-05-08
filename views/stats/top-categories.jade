@@ -7,7 +7,7 @@ if categories
                 if top.data.length > 0
                     .badges
                         each stat in top.data
-                            +championBadge(stat)
+                            +championBadge(stat, champions[stat.championId].name)
                     .champions-infos
                         each stat in top.data
                             +championInfos(champions[stat.championId], true)
