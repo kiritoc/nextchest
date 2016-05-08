@@ -16,7 +16,7 @@
   "stats category no data": "No available data, play more games !",
   "page not found": "Page not found",
   "error status_code": "{{{status_code}}} error",
-  "footer text": "An experiment of Kiritoc - {{{footerLink}}}",
+  "footer text": "An experiment by Kiritoc - {{{footerLink}}}",
   "change language to en": "Change language to en",
   "change language to fr": "Change language to fr"
 }
