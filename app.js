@@ -37,7 +37,7 @@ app.use(i18n.init);
 
 // set locale
 app.use(function (req, res, next) {
-    var lang = req.query.locale || req.acceptsLanguages('en', 'fr') || req.getLocale();
+    var lang = req.query.locale || req.getLocale();
 
     if (lang === 'en') {
         lang = 'en_US';

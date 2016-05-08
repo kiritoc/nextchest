@@ -5,8 +5,12 @@ if categories
         +category(top.title, __('stats category ' + top.title))
             if top.data
                 if top.data.length > 0
-                    each champion in top.data
-                        +championBadge(champion.image, champion.championLevel)
+                    .badges
+                        each stat in top.data
+                            +championBadge(stat)
+                    .champions-infos
+                        each stat in top.data
+                            +championInfos(champions[stat.championId], true)
                 else
                     p.no-data=__('stats category no data')
             else

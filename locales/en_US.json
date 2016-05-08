@@ -1,11 +1,17 @@
 {
   "head title": "KiDox",
   "main title": "NextChest",
+  "subtitle": "The conquest of the remaining chests",
   "form summoner name": "Enter the Summoner's name",
   "stats search": "Search",
+  "summoner informations": "Associated data to the summoner {{{summoner}}}",
+  "summoner level": "level {{{level}}}",
   "stats champions": "{{{summonerName}}} informations",
-  "stats category goal": "Your best chance of achieving the goal",
+  "stats category goal": "Your best chance of getting your next chest",
   "stats category random": "Some random picks",
   "stats category less-played": "Your less played picks",
-  "stats category no data": "No available data, play more games !"
+  "stats category no data": "No available data, play more games !",
+  "page not found": "Page not found",
+  "error status_code": "{{{status_code}}} error",
+  "footer text": "An experiment of Kiritoc - {{{footerLink}}}"
 }

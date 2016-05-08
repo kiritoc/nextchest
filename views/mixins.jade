@@ -1,12 +1,29 @@
-mixin championBadge(img, points)
+mixin championBadge(stat)
     .champion-badge
-        img(src=img)
-        #badge
-        span.points=points
+        img.js-champion-img(src=stat.image data-id=stat.championId)
+        .background
+        span.points=stat.championLevel
+
+mixin championInfos(info, hide)
+    .champion-infos(data-id=info.id class=hide === true ? 'hide-content' : '')
+        .title
+            span.name=info.name
+            span.subtitle &nbsp;-&nbsp;#{info.title}
+        .content
+            .partial-ribbon=__('champion roles')
+            p #{info.tags}
+        br
+        .content
+            .partial-ribbon=__('champion tips')
+            p.tips
+                each tip in info.allytips
+                    span=tip
+                    br
+
 
 mixin category(id, title)
-    .category.ribbon(id=id)
-        h3
+    .category(id=id)
+        h3.ribbon
             span=title
         .content
             if block

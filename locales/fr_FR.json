@@ -1,11 +1,19 @@
 {
   "head title": "KiDox",
   "main title": "NextChest",
+  "subtitle": "À la conquête des coffres restants",
   "form summoner name": "Entrez le nom de l'invocateur",
   "stats search": "Recherche",
+  "summoner informations": "Informations associées à l'invocateur {{{summoner}}}",
+  "summoner level": "niveau {{{level}}}",
+  "champion roles": "Rôles",
+  "champion tips": "Astuces",
   "stats champions": "{{{summonerName}}} informations",
-  "stats category goal": "Vos meilleures chances d'atteindre l'objectif",
+  "stats category goal": "Vos meilleures chances d'obtenir votre prochain coffre",
   "stats category random": "Quelques champions aléatoires",
   "stats category less-played": "Vos champions les moins joués",
-  "stats category no data": "Aucune donnée disponible, faites quelques parties de plus !"
+  "stats category no data": "Aucune donnée disponible, faites quelques parties de plus !",
+  "page not found": "La page demandée est introuvable",
+  "error status_code": "Erreur {{{status_code}}}",
+  "footer text": "Une expérimentation proposée par Kiritoc - {{{footerLink}}}"
 }
