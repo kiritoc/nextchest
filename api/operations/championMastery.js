@@ -4,10 +4,17 @@ var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
 const keyCacheSuffix = "championMastery",
-    ttl = 1800; // 30 minutes
+    LOG_PREFIX = 'ChampionMastery operation - ',
+    ttl = 1800; // cache duration [30 minutes]
 
 require('./summoner');
 
+/**
+ * LOL API Operation to get champions masteries of the given player id
+ *
+ * @param params - {region, playerId}
+ * @param callback
+ */
 LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
     var platformId = this.platforms[params.region];
 
@@ -19,6 +26,7 @@ LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
         throw LOG_PREFIX + 'Player ID is missing';
     } else {
         var keyCache = keyCacheSuffix + JSON.stringify(params);
+        // Request if not cached - Otherwise get from cache
         cache.wrap(keyCache, function (cb) {
             this.addGetRequest({
                 rateLimited: true,
@@ -29,6 +37,12 @@ LolClient.prototype.getChampionMasteryFromID = function (params, callback) {
     }
 };
 
+/**
+ * LOL API Operation to get champions masteries of the given player name
+ *
+ * @param params - {region, summonerName}
+ * @param callback
+ */
 LolClient.prototype.getChampionMasteryFromName = function (params, callback) {
     if (typeof callback !== 'function') {
         throw LOG_PREFIX + 'Callback is invalid';

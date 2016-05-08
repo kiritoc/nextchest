@@ -4,8 +4,14 @@ var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
 const keyCacheSuffix = 'summoner',
-    ttl = 86400;
+    ttl = 86400; // cache duration [1 day]
 
+/**
+ * LOL API Operation to get summoner id (and others informations as the avatar) of the given summoner name
+ *
+ * @param params - {region, summonerName}
+ * @param callback
+ */
 LolClient.prototype.getSummonerIDFromName = function (params, callback) {
     var keyCache = keyCacheSuffix + JSON.stringify(params);
 
@@ -15,6 +21,7 @@ LolClient.prototype.getSummonerIDFromName = function (params, callback) {
             message: 'Wrong params'
         });
     } else {
+        // Request if not cached - Otherwise get from cache
         cache.wrap(keyCache, function (cb) {
             this.addGetRequest({
                 rateLimited: true,

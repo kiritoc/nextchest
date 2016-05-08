@@ -45,17 +45,18 @@ module.exports = function () {
         lolClient.getChampionMasteryFromName({
             region: req.params.region.toLowerCase(),
             summonerName: req.params.summonerName.toLowerCase()
-        }, function (error, champions) {
+        }, function (error, champions) { // Here - we should have the champions masteries of the summoner
             if (error === null) {
                 lolClient.getChampionsInfos({
                     region: req.params.region.toLowerCase(),
                     locale: req.getLocale()
-                }, function (error, result) {
+                }, function (error, result) { // Here - we should have all the informations about champions (+-static data)
                     if (error === null) {
                         Object.keys(champions).forEach(function (key) {
                             var championId = champions[key].championId;
                             champions[key].image = lolClient.getChampionImageUrl(result.data[championId].image.full);
                         });
+
                         res.render('stats/top-categories', {
                             champions: result.data,
                             categories: [{

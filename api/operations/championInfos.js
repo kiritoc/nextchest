@@ -4,8 +4,14 @@ var LolClient = require('../lol'),
     cache = require('../../core/cache');
 
 const keyCacheSuffix = 'championsInfos',
-    ttl = 86400; // 1 day
+    ttl = 86400; // cache duration [1 day]
 
+/**
+ * LOL API Operation to get static informations of all the champions
+ * 
+ * @param params - {region, locale}
+ * @param callback
+ */
 LolClient.prototype.getChampionsInfos = function (params, callback) {
     if (params.region === undefined || params.locale === undefined) {
         callback({
@@ -15,6 +21,7 @@ LolClient.prototype.getChampionsInfos = function (params, callback) {
     } else {
         var keyCache = keyCacheSuffix + '[' + params.locale + ']' + JSON.stringify(params);
 
+        // Request if not cached - Otherwise get from cache
         cache.wrap(keyCache, function (cb) {
             this.addGetRequest({
                 rateLimited: false,

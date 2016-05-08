@@ -3,6 +3,9 @@
 var cacheManager = require('cache-manager'),
     redisStore = require('cache-manager-redis');
 
+/**
+ * Redis cache
+ */
 var redisCache = cacheManager.caching({
     store: redisStore,
     host: process.env.OPENSHIFT_REDIS_HOST || process.env.REDIS_HOST || 'localhost',
