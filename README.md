@@ -23,6 +23,7 @@ Thanks to the following 3rd party projects that were used for NextChest.
 * [less-middleware](https://github.com/emberfeather/less.js-middleware)
 * [serve-favicon](https://github.com/expressjs/serve-favicon)
 * [underscore](http://underscorejs.org/)
-* [intelliJ](https://www.jetbrains.com/idea/)
+* [intellij](https://www.jetbrains.com/idea/)
+* [openshift](https://www.openshift.com/)
 
 And big thanks to [StackOverflow](http://stackoverflow.com/) and [RiotGames contest](https://developer.riotgames.com/) !
