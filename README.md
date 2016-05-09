@@ -45,6 +45,7 @@ The *app.js* is the heart of NextChest. Its launching by the *core/server.js* an
 
 Thanks to the following 3rd party projects that were used for NextChest.
 * [node.js](https://nodejs.org/)
+* [npm](https://www.npmjs.com/)
 * [express](http://expressjs.com/)
 * [async](https://github.com/caolan/async)
 * [glob](https://github.com/isaacs/node-glob)
