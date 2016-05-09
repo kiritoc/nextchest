@@ -3,4 +3,4 @@ extends layout
 block content
   .error
     h2=__('error status_code', {status_code: error.status_code})
-    pre=__(error.message)
+    pre=__(error.message, error.message_options)
