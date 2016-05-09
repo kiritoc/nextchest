@@ -18,13 +18,23 @@ module.exports = function () {
             summonerName: req.params.summonerName.toLowerCase()
         }, function (error, result) {
             if (error === null) {
-                var summoner = result[req.params.summonerName];
-                summoner.image = lolClient.getSummonerImageUrl(summoner.profileIconId);
-                delete summoner.profileIconId;
+                var summoner = result[req.params.summonerName.toLowerCase()];
+                if (summoner !== undefined) {
+                    summoner.image = lolClient.getSummonerImageUrl(summoner.profileIconId);
+                    delete summoner.profileIconId;
 
-                res.render('stats/summoner-champions', {
-                    summoner: summoner
-                });
+                    res.render('stats/summoner-champions', {
+                        summoner: summoner
+                    });
+                } else {
+                    res.render('error', {
+                        error: {
+                            status_code: 404,
+                            message: 'no summoner found',
+                            message_options: {summoner: req.params.summonerName.toLowerCase()}
+                        }
+                    });
+                }
             } else {
                 res.render('error', {
                     error: error
@@ -52,8 +62,12 @@ module.exports = function () {
                 }, function (error, result) { // Here - we should have all the informations about champions (+-static data)
                     if (error === null) {
                         Object.keys(champions).forEach(function (key) {
-                            var championId = champions[key].championId;
-                            champions[key].image = lolClient.getChampionImageUrl(result.data[championId].image.full);
+                            var championId = champions[key].championId,
+                                champion = result.data[championId];
+
+                            if (champion !== undefined && champion.image !== undefined) {
+                                champions[key].image = lolClient.getChampionImageUrl(champion.image.full);
+                            }
                         });
 
                         res.render('stats/top-categories', {

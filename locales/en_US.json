@@ -15,6 +15,7 @@
   "stats category less-played": "Your less played picks",
   "stats category no data": "No available data, play more games !",
   "page not found": "Page not found",
+  "no summoner found": "Summoner {{{summoner}}} not found",
   "error status_code": "{{{status_code}}} error",
   "footer text": "An experiment by Kiritoc - {{{footerLink}}}",
   "change language to en": "Change language to en",

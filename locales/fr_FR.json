@@ -15,6 +15,7 @@
   "stats category less-played": "Vos champions les moins joués",
   "stats category no data": "Aucune donnée disponible, faites quelques parties de plus !",
   "page not found": "La page demandée est introuvable",
+  "no summoner found": "Impossible de trouver l'invocateur {{{summoner}}}",
   "error status_code": "Erreur {{{status_code}}}",
   "footer text": "Une expérimentation proposée par Kiritoc - {{{footerLink}}}",
   "change language to en": "Mettre la langue en anglais",
